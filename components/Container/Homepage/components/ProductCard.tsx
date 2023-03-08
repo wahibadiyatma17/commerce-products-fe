@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
 
-import { currencyFormat } from 'utils';
+import { currencyFormat } from '../../../../utils/index';
 
 interface BaseProductCardProps {
   title: string;
