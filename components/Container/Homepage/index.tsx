@@ -6,6 +6,7 @@ import tw, { styled } from 'twin.macro';
 
 import { useGetProducts } from 'hooks/products/productsHooks';
 import ProductCard from './components/ProductCard';
+import { productDataProps } from 'types/productsType';
 
 const Homepage: FC = () => {
   const [value, setValue] = useState<string>('');
@@ -19,6 +20,7 @@ const Homepage: FC = () => {
 
   const { data: productsRes, isLoading: isProductsLoading } = useGetProducts(params);
   const productsData = useMemo(() => productsRes?.data ?? [], [productsRes]);
+  console.log('wahib productsData', productsData);
 
   return (
     <div tw="flex flex-col w-full h-full min-h-screen items-center max-w-[1366px] mx-auto gap-8 py-10 px-[4.5rem]">
@@ -34,7 +36,7 @@ const Homepage: FC = () => {
         />
       </StyledSearchInput>
       <div tw="flex gap-8 flex-wrap max-w-[80%] items-center justify-center">
-        {productsData.map((data: any, idx: number) => (
+        {productsData.map((data: productDataProps, idx: number) => (
           <ProductCard
             title={data.title}
             price={data.price}
