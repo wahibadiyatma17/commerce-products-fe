@@ -7,24 +7,11 @@ import { ProductDetailDataType } from 'types/productDetailTypes';
 import { BiChevronRight } from 'react-icons/bi';
 
 const Homepage: FC = () => {
-  const { data: productsAPIres } = useGetProducts();
-  const productsData = useMemo(
-    () => (productsAPIres?.data as Array<ProductDetailDataType>) ?? [],
-    [productsAPIres],
-  );
-
   const router = useRouter();
   return (
     <div tw="flex flex-col w-full h-full min-h-screen items-center justify-center max-w-[1366px] mx-auto gap-8">
       <h4 tw="font-semibold text-xl">Select Your Product</h4>
-      <div tw="flex flex-row gap-4 justify-center flex-wrap max-w-[80%]">
-        {productsData?.map((data: ProductDetailDataType, idx: number) => (
-          <StyledProductItem onClick={() => router.push(`/product-detail/${idx}`)} key={idx}>
-            <span tw="text-sm">{data.name}</span>
-            <BiChevronRight size={'16px'} />
-          </StyledProductItem>
-        ))}
-      </div>
+      <div tw="flex flex-row gap-4 justify-center flex-wrap max-w-[80%]"></div>
     </div>
   );
 };

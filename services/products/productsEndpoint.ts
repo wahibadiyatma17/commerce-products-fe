@@ -1,5 +1,5 @@
 const productsEndpoint = {
-  products: 'https://fe.dev.dxtr.asia/api/products',
+  products: 'http://127.0.0.1:8000/api/products',
 };
 
 export default productsEndpoint;

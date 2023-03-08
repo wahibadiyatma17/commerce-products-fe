@@ -3,16 +3,13 @@ import { NextPage } from 'next';
 import React from 'react';
 import 'twin.macro';
 
-import Homepage from 'components/Container/Homepage';
-
 const Index: NextPage = () => {
   return (
     <>
       <Head>
-        <title>MIFX Homepage Test</title>
+        <title>Homepage</title>
         <meta name="description" content={''} />
       </Head>
-      <Homepage />
     </>
   );
 };
