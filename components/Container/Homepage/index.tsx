@@ -1,39 +1,65 @@
-import React, { FC, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import React, { FC, useMemo, useState } from 'react';
+import { Input } from 'alceo-design';
+import { BiSearch as SearchIcon } from 'react-icons/bi';
 import tw, { styled } from 'twin.macro';
 
 import { useGetProducts } from 'hooks/products/productsHooks';
-import { ProductDetailDataType } from 'types/productDetailTypes';
-import { BiChevronRight } from 'react-icons/bi';
+import ProductCard from './components/ProductCard';
 
 const Homepage: FC = () => {
-  const router = useRouter();
+  const [value, setValue] = useState<string>('');
+  const params = {
+    title: value,
+  };
+
+  const { data: productsRes, isLoading: isProductsLoading } = useGetProducts(params);
+  const productsData = useMemo(() => productsRes?.data ?? [], [productsRes]);
+  console.log('wahib productsData', productsData);
+
   return (
-    <div tw="flex flex-col w-full h-full min-h-screen items-center justify-center max-w-[1366px] mx-auto gap-8">
-      <h4 tw="font-semibold text-xl">Select Your Product</h4>
-      <div tw="flex flex-row gap-4 justify-center flex-wrap max-w-[80%]"></div>
+    <div tw="flex flex-col w-full h-full min-h-screen items-center max-w-[1366px] mx-auto gap-8 py-10 px-[4.5rem]">
+      <h4 tw="font-semibold text-xl">Daftar Produk</h4>
+      <StyledSearchInput>
+        <Input
+          id="filterGlobal"
+          type="text"
+          placeholder="Cari Produk"
+          suffix={<SearchIcon />}
+          defaultValue={value}
+          onChange={(e) => setValue(e?.target?.value)}
+        />
+      </StyledSearchInput>
+      <div tw="flex gap-8 flex-wrap max-w-[80%] items-center justify-center">
+        {productsData.map((data: any, idx: number) => (
+          <ProductCard
+            title={data.title}
+            price={data.price}
+            description={data.description}
+            key={idx}
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
 export default Homepage;
 
-const StyledProductItem = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  width: max-content;
-  min-width: 7.5rem;
-  ${tw`shadow-sm border-solid border-[1px] transition-all`}
+const StyledSearchInput = styled.div`
+  width: 100%;
+  max-width: 35rem;
 
-  :hover {
-    transform: scale(1.02);
-    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  .suffix-container {
+    font-size: 1.5rem !important;
+  }
 
-    svg {
-      transform: translate(0.25rem, 0);
+  @media (max-width: 768px) {
+    .input-wrapper {
+      height: 2.5rem;
+
+      input {
+        font-size: 0.75rem !important;
+      }
     }
   }
 `;
