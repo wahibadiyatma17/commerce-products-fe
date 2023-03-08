@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { NextPage } from 'next';
 import React from 'react';
 import 'twin.macro';
+import Homepage from 'components/Container/Homepage';
 
 const Index: NextPage = () => {
   return (
@@ -10,6 +11,7 @@ const Index: NextPage = () => {
         <title>Homepage</title>
         <meta name="description" content={''} />
       </Head>
+      <Homepage />
     </>
   );
 };
