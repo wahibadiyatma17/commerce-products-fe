@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useState } from 'react';
 import { Input } from 'alceo-design';
 import { BiSearch as SearchIcon } from 'react-icons/bi';
+import { useDebounce } from 'usehooks-ts';
 import tw, { styled } from 'twin.macro';
 
 import { useGetProducts } from 'hooks/products/productsHooks';
@@ -8,13 +9,16 @@ import ProductCard from './components/ProductCard';
 
 const Homepage: FC = () => {
   const [value, setValue] = useState<string>('');
+
+  // use debounce search to prevent hitting a lot API on every keystroke change.
+  const debouncedSearch = useDebounce(value, 500);
+
   const params = {
-    title: value,
+    title: debouncedSearch,
   };
 
   const { data: productsRes, isLoading: isProductsLoading } = useGetProducts(params);
   const productsData = useMemo(() => productsRes?.data ?? [], [productsRes]);
-  console.log('wahib productsData', productsData);
 
   return (
     <div tw="flex flex-col w-full h-full min-h-screen items-center max-w-[1366px] mx-auto gap-8 py-10 px-[4.5rem]">
